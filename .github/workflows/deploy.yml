@@ -6,7 +6,7 @@ on:
       - v4
  
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
  
@@ -32,14 +32,11 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: public
- 
-  deploy:
-    needs: build
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Push to main branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: main
+          force_orphan: true
+          keep_files: false
