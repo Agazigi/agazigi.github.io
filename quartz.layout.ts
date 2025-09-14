@@ -6,7 +6,21 @@ export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [],
   afterBody: [
-    
+    Component.Comments({
+    provider: 'giscus',
+    options: {
+      // from data-repo
+      repo: 'agazigi/agazigi.github.io',
+      // from data-repo-id
+      repoId: 'R_kgDOPTbeLw',
+      // from data-category
+      category: 'Announcements',
+      // from data-category-id
+      categoryId: 'DIC_kwDOPTbeL84CtjA7',
+      // from data-lang
+      lang: 'zh-CN'
+    }
+  }),
   ],
   footer: Component.Footer({
     links: {

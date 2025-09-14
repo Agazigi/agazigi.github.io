@@ -22,6 +22,7 @@ interface Options {
   openLinksInNewTab: boolean
   lazyLoad: boolean
   externalLinkIcon: boolean
+  showLinkFavicon: boolean
 }
 
 const defaultOptions: Options = {
@@ -30,6 +31,7 @@ const defaultOptions: Options = {
   openLinksInNewTab: false,
   lazyLoad: false,
   externalLinkIcon: true,
+  showLinkFavicon: true,
 }
 
 export const CrawlLinks: QuartzTransformerPlugin<Partial<Options>> = (userOpts) => {
@@ -81,6 +83,22 @@ export const CrawlLinks: QuartzTransformerPlugin<Partial<Options>> = (userOpts) 
                       },
                     ],
                   })
+                }
+
+                if (isExternal && opts.showLinkFavicon) {
+                  const domain = new URL(node.properties.href).hostname
+                  if (domain) {
+                    node.children.unshift({
+                      type: "element",
+                      tagName: "img",
+                      properties: {
+                        src: `https://s2.googleusercontent.com/s2/favicons?domain_url==${domain}`,
+                        alt: "",
+                        style: "width: 1em; height: auto; margin-left: 4px; margin-right: 4px; vertical-align: middle;",
+                      },
+                      children: [],
+                    })
+                  }
                 }
 
                 // Check if the link has alias text
