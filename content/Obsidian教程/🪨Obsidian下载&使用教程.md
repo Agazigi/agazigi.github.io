@@ -1,5 +1,5 @@
 ---
-title: Obsidian下载&使用教程
+title: 🪨Obsidian下载&使用教程
 draft: false
 tags:
   - "#Obsidian"

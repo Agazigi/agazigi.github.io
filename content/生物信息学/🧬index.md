@@ -1,5 +1,5 @@
 ---
-title: 生物信息学
+title: 🧬生物信息学
 draft: false
 tags:
   - "#生物信息学"

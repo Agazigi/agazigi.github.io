@@ -1,5 +1,5 @@
 ---
-title: AlexNet
+title: 🕸AlexNet
 draft: false
 tags:
   - "#李沐读论文"
