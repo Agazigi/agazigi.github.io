@@ -8,7 +8,7 @@ tags:
  
 # Git 与 Learn Git Branching
 
-Git就是一个分布式的版本管理系统。无论是个人开发还是协作开发，都能够对我们的代码进行十分友好的版本管理。
+Git就是一个分布式的版本管理系统。无论是个人开发还是协作开发，都能够对我们的代码进行十分友好的管理。
 
 [Learn Git Branching](https://learngitbranching.js.org/?locale=zh_CN)是一个免费的Git学习教程，用游戏的方式进行Git命令的教学，其树状的可视化分支使得Git的版本管理细节清晰可见。
 
