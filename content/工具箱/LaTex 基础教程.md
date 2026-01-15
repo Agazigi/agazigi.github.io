@@ -1,9 +1,8 @@
 ---
-title: 工作流程
+title: Example Title
 draft: true
 tags:
-  - "#工具箱"
-  - "#工作流程"
+  - example-tag
 ---
  
 The rest of your content lives here. You can use **Markdown** here :)
