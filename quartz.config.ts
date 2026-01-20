@@ -9,7 +9,7 @@ import * as Plugin from "./quartz/plugins"
 const config: QuartzConfig = {
   configuration: {
     pageTitle: "Agazigi",
-    pageTitleSuffix: "✧⁺⸜(●˙▾˙●)⸝⁺✧",
+    pageTitleSuffix: " | 梦晓太",
     enableSPA: true,
     enablePopovers: true,
     analytics: {
@@ -33,7 +33,7 @@ const config: QuartzConfig = {
           lightgray: "#e5e5e5",
           gray: "#b8b8b8",
           darkgray: "#4e4e4e",
-          dark: "#00a2ffff",
+          dark: "rgb(115, 0, 255)",
           secondary: "#284b63",
           tertiary: "#84a59d",
           highlight: "rgba(143, 159, 169, 0.15)",
