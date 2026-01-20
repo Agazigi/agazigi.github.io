@@ -1,5 +1,5 @@
 ---
-title: 🤖AI is all you need
+title: 🤖AI Is All You Need
 draft: false
 tags:
   - "#人工智能"
