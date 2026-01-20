@@ -155,10 +155,17 @@ ${stylesheet.join("\n\n")}
   --highlight: ${theme.colors.lightMode.highlight};
   --textHighlight: ${theme.colors.lightMode.textHighlight};
 
-  --titleFont: "${getFontSpecificationName(theme.typography.title || theme.typography.header)}", ${DEFAULT_SANS_SERIF};
-  --headerFont: "${getFontSpecificationName(theme.typography.header)}", ${DEFAULT_SANS_SERIF};
-  --bodyFont: "${getFontSpecificationName(theme.typography.body)}", ${DEFAULT_SANS_SERIF};
-  --codeFont: "${getFontSpecificationName(theme.typography.code)}", ${DEFAULT_MONO};
+  // --titleFont: "${getFontSpecificationName(theme.typography.title || theme.typography.header)}", ${DEFAULT_SANS_SERIF};
+  // --headerFont: "${getFontSpecificationName(theme.typography.header)}", ${DEFAULT_SANS_SERIF};
+  // --bodyFont: "${getFontSpecificationName(theme.typography.body)}", ${DEFAULT_SANS_SERIF};
+  // --codeFont: "${getFontSpecificationName(theme.typography.code)}", ${DEFAULT_MONO};
+
+  --headerFont: "LXGW WenKai";
+	--bodyFont: "LXGW WenKai";
+	--codeFont: "Maple Mono CN","LXGW WenKai";
+	--titleFont: "LXGW WenKai";
+	--strong-em-color-1: #1048ff;
+	--strong-em-color-2: #14c8ff;
 }
 
 :root[saved-theme="dark"] {
