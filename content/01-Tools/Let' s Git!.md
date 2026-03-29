@@ -1,10 +1,11 @@
 ---
-title: 🗒Let' s Git!
-draft: false
+title: Let' s Git!
+draft: true
 tags:
   - "#工具箱"
   - "#Git"
 ---
+> [!note] 本篇说明
  
 # Git 与 Learn Git Branching
 
@@ -112,3 +113,8 @@ Git技术、技巧与贴士大集合。
 ## 2.2 Git 远程仓库高级操作
 
 做一名仁慈的独裁者一定很有趣。
+
+
+---
+> [!success] 结语
+

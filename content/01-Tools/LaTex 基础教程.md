@@ -1,8 +1,25 @@
 ---
-title: Example Title
+title: LaTeX 基础教程
 draft: true
 tags:
-  - example-tag
+  - "#工具箱"
+  - "#LaTeX"
+  - "#教程"
 ---
+> [!note] 本篇说明
  
-The rest of your content lives here. You can use **Markdown** here :)
+
+# 常用符号查询表
+
+| 符号     |     |
+| ------ | --- |
+| $\pi$  |     |
+
+
+
+
+---
+> [!success] 结语
+
+
+
