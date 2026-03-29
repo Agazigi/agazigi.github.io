@@ -10,11 +10,9 @@ tags:
 > 本篇论文是 **弗罗里达国际大学** 的研究人员于 2023 年 8 月 3 日发表在 **[《Nature Machine Intelligence》](https://www.nature.com/articles/s42256-023-00715-4)** 上的一篇研究论文，该团队利用以 **Transformer** 架构为基础的 **[[ViT（Vision in Transformer）]]** 模型进行 **蛋白质-蛋白质结合界面（PPI）** 的打分评估，能够对天然蛋白质复合物和不正确构象进行准确区分。具体来说，研究人员参考先前工作（i.e. **MaSIF**）将蛋白质结合界面转换成二维图像的集合，其中每一张图像对应着界面的几何或生化特性，每一个像素代表相应的特征值，利用 **ViT** 模型进行界面结合分数评估。同时作者也结合生物物理前验知识，进行了 **混合能量项、多注意力模块、对比学习** 的多项改进增强，在三个基准测试集上取得了 **SOTA** 的效果。
 
 > [!tip]- 相关资料
-> 该论文的预印本发表在 **[bioRxiv](https://www.biorxiv.org/content/10.1101/2023.01.03.522623v2)** 上。
-> 
-> 该论文的补充材料可以在 **[补充材料](https://static-content.springer.com/esm/art%3A10.1038%2Fs42256-023-00715-4/MediaObjects/42256_2023_715_MOESM1_ESM.pdf)** 上进行下载。
-> 
-> 该项目的测试数据和代码均为开源：**[测试数据](https://zenodo.org/records/7948337)** & **[代码](https://github.com/stebliankin/piston)** 。
+> 1. 该论文的预印本发表在 **[bioRxiv](https://www.biorxiv.org/content/10.1101/2023.01.03.522623v2)** 上。
+> 2. 该论文的补充材料可以在 **[补充材料](https://static-content.springer.com/esm/art%3A10.1038%2Fs42256-023-00715-4/MediaObjects/42256_2023_715_MOESM1_ESM.pdf)** 上进行下载。
+> 3. 该项目的测试数据和代码均为开源：**[测试数据](https://zenodo.org/records/7948337)** & **[代码](https://github.com/stebliankin/piston)** 。
 
 
 # 蛋白质蛋白质相互作用
@@ -59,7 +57,7 @@ tags:
 
 ## Crop
 
-对蛋白质复合物进行裁剪。具体来说，定义与对方蛋白原子距离在 5$\mathring{A}$ 之内的为接触点，筛选出所有的接触点之后，计算接触点的几何中心；接着以接触中心为球心，裁剪掉距离该中心超过 $r_{surf}$ （文章中尝试了 12$\mathring{A}$、16$\mathring{A}$、20$\mathring{A}$） 半径以外的区域。
+对蛋白质复合物进行裁剪。具体来说，定义与对方蛋白原子距离在 $5\mathring{A}$ 之内的为接触点，筛选出所有的接触点之后，计算接触点的几何中心；接着以接触中心为球心，裁剪掉距离该中心超过 $r_{surf}$ （文章中尝试了 $12\mathring{A}$、$16\mathring{A}$、$20\mathring{A}$） 半径以外的区域。
 
 ## Triangle
 
@@ -74,7 +72,7 @@ tags:
 - Step3：再由两个蛋白质表面的点之间的欧几里得距离确定 **Patch Distance** 的一个几何特征。
 - Step4：使用 DSSP v2.365 计算了 Patch 上的 相对可接近表面积。
 
-最终，得到了 **两个表面上** 的几何生化特征和**一个表面之间** 的几何特征。
+最终，得到了 **两个表面上** 的几何生化特征和 **一个表面之间** 的几何特征。
 
 ## Project
 
