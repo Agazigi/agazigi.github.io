@@ -11,7 +11,9 @@ tags:
 
 > [!tip]- 相关资料
 > 该论文的预印本发表在 **[bioRxiv](https://www.biorxiv.org/content/10.1101/2023.01.03.522623v2)** 上。
+> 
 > 该论文的补充材料可以在 **[补充材料](https://static-content.springer.com/esm/art%3A10.1038%2Fs42256-023-00715-4/MediaObjects/42256_2023_715_MOESM1_ESM.pdf)** 上进行下载。
+> 
 > 该项目的测试数据和代码均为开源：**[测试数据](https://zenodo.org/records/7948337)** & **[代码](https://github.com/stebliankin/piston)** 。
 
 
@@ -119,22 +121,38 @@ tags:
 5. Output：最终经过将上述输入进行合并，经过多层自注意力，输出的是特征图的 $M$ 维嵌入向量 $Y= \{ y_1,y_2,...,y_M \}$ 。
 
 上述流程用公式化表示为：
-$$ X = \left[ Emb(Class), Emb(img) \right] + Position_{Emb}$$$$ Y = \left\{ y_1, y_2, ..., y_M \right\} = l \circ SelfAttention(X, X, X) $$
+
+$$ X = \left[ Emb(Class), Emb(img) \right] + Position_{Emb}$$
+
+$$ Y = \left\{ y_1, y_2, ..., y_M \right\} = l \circ SelfAttention(X, X, X) $$
+
 此时的注意力图称为空间注意力图，标识了对分类决策至关重要的 小正方形 Patch 。
 
 ## PIsToN-hybrid
 
 该架构在 **PIsToN-ViT** 的基础上，加入了基于物理先验的能量项，简单的使用 **Linear** 的全连接将 $Q$ 项能量项投射到嵌入向量 $\{ e_1, e_2, ..., e_Q \}$ 上，接着和从 ViT 获得的向量 $Y$ 进行拼接，再被一个 **Linear** 投射回嵌入维度，从而融合空间和物理信息。
-$$ E = Linear(\{ e_1, e_2, ..., e_Q \})  $$$$ Z_{concat} = Concat(Y, E)  $$ $$ Y_{hybrid} = Linear(Z_{concat}) $$
+
+$$ E = Linear(\{ e_1, e_2, ..., e_Q \})  $$
+
+$$ Z_{concat} = Concat(Y, E)  $$
+
+$$ Y_{hybrid} = Linear(Z_{concat}) $$
+
 ## PIsToN-MultiAttn
 
 这部分实现了 **多通道的注意力机制** ，其创新点在于将不同的特征图和能量项进行混合通过 **PIsToN-hybrid** 进行拼接，分五个分支独立地从不同空间和物理先验上学习起嵌入表征，这五组通道在 [特征融合](#特征融合) 一节就已经讲过。
 
 这五个通道分别包含一个独立的 ViT-Hybrid 网络，获得了五组表征和空间注意力图，此时，为了防止类信息的遗忘，在输入最终融合五组表征的 Transformer 之前再次加入了 **Class Token** 。最终，五组表征和类信息输入到最终的 Transformer 网络中，得到了最终的嵌入表征 $Y= \{ y_1,y_2,...,y_M \}$ 和特征注意力。
-$$ Y_k = ViT-Hybrid_k\left(Z_{concat,k} + Position_{Emb} \right) , \quad k=1,2,3,4,5 $$
-$$ Z_{multi} = Concat\left( Emb(Class), Y_1, Y_2, Y_3, Y_4, Y_5 \right)$$$$ Y_{final} = \left\{ y_1, y_2, ..., y_M \right\} = Transformer_{final}(Z_{multi}) $$
 
-> [!tip]- 为什么最终输出的不是类别？`->` 原型学习
+$$ Y_k = ViT-Hybrid_k\left(Z_{concat,k} + Position_{Emb} \right) , \quad k=1,2,3,4,5 $$
+
+$$ Z_{multi} = Concat\left( Emb(Class), Y_1, Y_2, Y_3, Y_4, Y_5 \right)$$
+
+$$ Y_{final} = \left\{ y_1, y_2, ..., y_M \right\} = Transformer_{final}(Z_{multi}) $$
+
+
+
+> [!tip]- 为什么最终输出的不是类别？—— 原型学习
 > 事实上，对于结合界面是否是 native 的这个问题，本质上就是一个二分类的问题。我们完全可以对结合界面分类为是 native 的和不是 native 的，并使用 PIsToN-MultiAttn 模型进行预测，但作者通过实践告诉我们直接的二元分类并不能够很好的解决这个问题。其原因可以考虑这几个方面：
 > 
 > 1. 评分函数的核心任务不仅是判断“对”或“错”，更重要的是从成千上万个候选构象中将 **最接近天然结构（Native-like）的构象排在最前面** 。
@@ -150,10 +168,12 @@ $$ Z_{multi} = Concat\left( Emb(Class), Y_1, Y_2, Y_3, Y_4, Y_5 \right)$$$$ Y_{f
 
 > [!tip]- CAPRI 标准
 > 该标准是传统方法用于评估对接模型质量的一个标准。
+> 
 > 包含三个独立的指标：**Fnat**（保留的天然界面接触比例）、**LRMSD**（配体链的均方根偏差，反映整体结构对齐）、**iRMSD**（界面残基的均方根偏差，反映局部细节）。
+> 
 > 这些指标需通过复杂阈值组合将模型分为四类：错误（Incorrect）、可接受（Acceptable）、中等（Medium）和高质量（High）。
 
-为了实现对比学习的优化，数据集的构造需要构造不同的正负样本。从训练集中的天然蛋白质复合物（native）出发，使用 **HDOCK** 重新对接了 100 个对接 model。然后将每一个对接的 model 和 native 进行比较以通过 CAPRI 标准评估其质量。满足：$\text{Fant} \ge 0.1 \land \left( \text{LRMSD} \le 10\ \text{Å} \lor \text{iRMSD} \le 4\ \text{Å} \right)$ 的认为是可接受的对接 model，否则是不正确的 model。
+为了实现对比学习的优化，数据集的构造需要构造不同的正负样本。从训练集中的天然蛋白质复合物（native）出发，使用 **HDOCK** 重新对接了 100 个对接 model。然后将每一个对接的 model 和 native 进行比较以通过 CAPRI 标准评估其质量。满足：$Fant \ge 0.1 \land \left(LRMSD \le 10\ Å \lor iRMSD \le 4\ Å \right)$ 的认为是可接受的对接 model，否则是不正确的 model。
 
 同时，作者设计了在同一个蛋白质下构造正负样本对，而不是随机构造的方法。经实验验证，这样的选取策略效果更好。每一个小批次包括同一个蛋白质的可接受和不正确 model，限制正负样本的比例为 1:5 以限制 model 中大量都是不正确的数据不平衡问题。除了进行输入之前的标准缩放的归一化操作，在训练过程中作者还对二维图进行 0～360° 随机旋转的数据增强，迫使训练的模型具有旋转不变性。
 
@@ -165,7 +185,7 @@ $$ Z_{multi} = Concat\left( Emb(Class), Y_1, Y_2, Y_3, Y_4, Y_5 \right)$$$$ Y_{f
 
 该损失有如下公式所计算，第一部分是对正样本做对比，让正样本之间相互靠近；第二部分是对负样本做对比，让负样本之间相互靠近。从而让 **同类样本** 在嵌入空间中聚在一起（拉近正样本距离），**不同类样本** 互相推开（拉远负样本距离）。
 $$
-L_{\text{supCon}} = -\sum_{i=1}^{L} \frac{1}{L} \sum_{j=1}^{L} \log \frac{\exp(Y_i^+ \cdot Y_j^+/\tau)}{\sum_{a \notin \{i\}} \exp(Y_i^+ \cdot Y_a/\tau)} \\
+L_{\text{supCon}} = -\sum_{i=1}^{L} \frac{1}{L} \sum_{j=1}^{L} \log \frac{\exp(Y_i^+ \cdot Y_j^+/\tau)}{\sum_{a \notin \{i\}} \exp(Y_i^+ \cdot Y_a/\tau)}
 -\sum_{i=1}^{5L} \frac{1}{5L} \sum_{j=1}^{5L} \log \frac{\exp(Y_i^- \cdot Y_j^-/\tau)}{\sum_{a \notin \{i\}} \exp(Y_i^- \cdot Y_a/\tau)}
 $$
 
