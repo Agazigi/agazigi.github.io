@@ -1,6 +1,6 @@
 ---
 title: TrialBench
-draft: true
+draft: false
 tags:
   - "#生物信息学"
   - 深度学习
