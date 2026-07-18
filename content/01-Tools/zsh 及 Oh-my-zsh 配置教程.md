@@ -10,19 +10,20 @@ tags:
 > [!note] 本篇说明
 > zsh 是一个非常好用的 Shell，配合 Oh-my-zsh 这一美化包、功能扩展包，能够实现命令行补全、文件夹快速跳转等功能。
 
+
 > [!tip] 快速安装
 > 依次复制粘贴以下命令即可快速的完成 zsh 和 Oh-my-zsh 的配置：
 > 
 > Step1：安装 `zsh` 和 `Oh-my-zsh`
 > ```bash
 > apt install zsh
-chsh -s /bin/zsh
-sh -c "$(curl -fsSL https://gitee.com/pocmon/ohmyzsh/raw/master/tools/install.sh)"
+> chsh -s /bin/zsh
+> sh -c "$(curl -fsSL https://gitee.com/pocmon/ohmyzsh/raw/master/tools/install.sh)"
 > ```
 > Step2：安装 `命令提示` 和 `语法高亮` 插件
 > ```bash
 > git clone https://gh.xmly.dev/https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://gh.xmly.dev/https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+> git clone https://gh.xmly.dev/https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 > ```
 > Step3：修改 `.zshrc`
 > ```bash
@@ -30,8 +31,9 @@ git clone https://gh.xmly.dev/https://github.com/zsh-users/zsh-syntax-highlighti
 > ```
 > Step4：在 `plugins` 添加插件
 > ```txt
-zsh-autosuggestions zsh-syntax-highlighting z
+> zsh-autosuggestions zsh-syntax-highlighting z
 > ```
+
 
 ---
 > [!success] 结语
